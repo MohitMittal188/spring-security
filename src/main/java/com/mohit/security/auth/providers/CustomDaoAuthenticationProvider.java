@@ -1,4 +1,4 @@
-package com.mohit.security.auth;
+package com.mohit.security.auth.providers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.mohit.security.auth.AuthUserDetailsService;
+
 @Component
 public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider{
 
@@ -24,9 +26,6 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider{
 	
 	@Override
 	public Authentication authenticate(Authentication arg0) throws AuthenticationException {
-		LOGGER.info("**********");
-		LOGGER.info("Executing Dao authentication provider");
-		LOGGER.info("**********");
 		return super.authenticate(arg0);
 	}
 

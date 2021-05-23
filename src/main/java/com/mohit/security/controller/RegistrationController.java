@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mohit.security.model.Customer;
 import com.mohit.security.service.CustomerService;
+import com.mohit.security.service.RegistrationService;
 
 @Controller
 public class RegistrationController {
 	
 	@Autowired
-	CustomerService customerService;
+	RegistrationService registrationService;
 	
 	@GetMapping("/send/otp")
 	public ResponseEntity<Integer> sendOtp(@RequestParam String emailId){
 		Random random = new Random();
 		Integer otp = 100000 + random.nextInt(900000);
-		customerService.saveOtp(emailId,otp);
+		registrationService.saveOtp(emailId,otp);
 		
 //		TODO: SEND THIS OTP ON EMAIL
 		return new ResponseEntity<>(otp,HttpStatus.OK);
@@ -32,14 +33,14 @@ public class RegistrationController {
 	
 	@GetMapping("/check/otp")
 	public ResponseEntity<Boolean> checkOtpExpire(String emailId,Integer otp){
-		Boolean otpExpire = customerService.isOtpExpire(emailId);
+		Boolean otpExpire = registrationService.isOtpExpire(emailId);
 		
 		return new ResponseEntity<>(otpExpire,HttpStatus.OK);
 	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody Customer customer) {
-		customerService.saveCustomer(customer);
+		registrationService.saveCustomer(customer);
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
