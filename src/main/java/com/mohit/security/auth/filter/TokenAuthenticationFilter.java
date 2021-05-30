@@ -1,6 +1,7 @@
 package com.mohit.security.auth.filter;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,15 +32,17 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
+
 		String token = request.getHeader("authorizationToken");
+		if(token!=null) {
+			token = token.replace("Bearer ", "");	
+		}
 		
 		if(token!=null) {
 			TokenAuthentication tokenAuthentication = new TokenAuthentication(token, null);
 			Authentication authenticate = getAuthenticationManager().authenticate(tokenAuthentication);
 			
 			SecurityContextHolder.getContext().setAuthentication(authenticate);
-			filterChain.doFilter(request, response);
 		}
 		
 		filterChain.doFilter(request, response);

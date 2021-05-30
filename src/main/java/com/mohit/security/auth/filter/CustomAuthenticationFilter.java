@@ -31,8 +31,11 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		String username = request.getHeader("username");
-		String password = request.getHeader("password");
+		response.setHeader("Access-Control-Expose-Headers", "token");
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
 		String otp = request.getHeader("otp");
 		
 		if(otp == null) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
+	@CrossOrigin
 	@GetMapping("/login/otp")
 	public ResponseEntity<Integer> sendLoginOtp(@RequestParam String email) {
 		
@@ -29,10 +31,11 @@ public class LoginController {
 		return new ResponseEntity<>(otp,HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@GetMapping("/login")
-	ResponseEntity<Boolean> loginAllowed(@RequestHeader String username,
-			@RequestHeader(required=false) String password,
-			@RequestHeader(required=false) Integer otp){
+	public ResponseEntity<Boolean> loginAllowed(@RequestParam String username,
+			@RequestParam(required=false) String password,
+			@RequestParam(required=false) Integer otp){
 		
 		return new ResponseEntity<>(Boolean.TRUE,HttpStatus.OK);
 		
